@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Board</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        header { text-align: center; padding: 30px 0; border-bottom: 1px solid #eee; }
+        nav { text-align: center; padding: 10px 0; border-bottom: 1px solid #ccc; background: #f9f9f9; }
+        nav a { margin: 0 15px; font-weight: bold; color: #252525; }
+        footer { text-align: center; padding: 30px 0; border-top: 1px solid #ccc; margin-top: 50px; color: #999; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a th:href="@{/}" style="color:#252525;">CLOUD SYSTEM</a></h1>
+    </header>
+
+    <nav>
+        <a th:href="@{/board/openBoardList.do}">게시판</a>
+  
+        <th:block th:if="${#authorization.expression('isAnonymous()')}">
+            <a th:href="@{/member/join.do}">회원가입</a>
+        </th:block>
+        <th:block th:if="${#authorization.expression('isAnonymous()')}">
+            <a th:href="@{/member/login.do}">로그인</a>
+        </th:block>
+        <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+            <span th:text="|${#authentication.name}님 환영합니다|" style="color:#6b9ab8; font-weight:bold;"></span>
+            <a th:href="@{/member/logout.do}" style="color:#ff4d4d; margin-left:10px;">로그아웃</a>
+        </th:block>
+    </nav>
+
+    <div class="container">
+        <th:block th:replace="${content}"></th:block>
+    </div>
+
+    <footer>
+        <p>Copyright &copy; 2026 Cloud Project. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
